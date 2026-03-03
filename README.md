@@ -32,9 +32,11 @@ Note that this restore bundle is not compressed, though modern `idevicerestore` 
 
 After the custom restore bundle is created, you can use `ipwnder32` by dora2ios to enter pwned DFU mode, then restore the device with `idevicerestore`
 
+`./bins/ipwnder32 -p`
+
 `./bins/idevicerestore -e iPad1,1_7.0_11A465_Restore`
 
-After the restore completes, the device should be stuck in recovery mode. You can use `ipwnder32` by dora2ios to enter pwned DFU mode, and finally you can boot it.
+After the restore completes, the device should be stuck in recovery mode. You can now boot it with this command.
 
 `./boot.sh`
 
