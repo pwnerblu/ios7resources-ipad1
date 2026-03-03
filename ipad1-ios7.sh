@@ -10,6 +10,7 @@ curl -L -o $SCRIPT_DIR/bins/dmg https://github.com/LukeZGD/Legacy-iOS-Kit/raw/re
 curl -L -o $SCRIPT_DIR/bins/ipwnder32 https://github.com/LukeZGD/Legacy-iOS-Kit/raw/refs/heads/main/bin/macos/ipwnder32
 curl -L -o $SCRIPT_DIR/bins/img3maker https://github.com/LukeZGD/Legacy-iOS-Kit/raw/refs/heads/main/bin/macos/img3maker
 curl -L -o $SCRIPT_DIR/bins/pzb https://github.com/LukeZGD/Legacy-iOS-Kit/raw/refs/heads/main/bin/macos/pzb
+curl -L -o $SCRIPT_DIR/bins/irecovery https://github.com/NyanSatan/SundanceInH2A/raw/refs/heads/master/executables/irecovery
 curl -L -o $SCRIPT_DIR/bins/idevicerestore https://github.com/NyanSatan/SundanceInH2A/raw/refs/heads/master/executables/idevicerestore
 curl -L -o $SCRIPT_DIR/bins/hfsplus https://github.com/NyanSatan/SundanceInH2A/raw/refs/heads/master/executables/hfsplus
 curl -L -o $SCRIPT_DIR/dtre/ddt.py https://github.com/NyanSatan/SundanceInH2A/raw/refs/heads/master/dt/ddt.py
