@@ -1,7 +1,9 @@
 # ios7-ipad1
 
 A project to restore and boot iOS 7.0 (11A465) on the iPad 1st Generation, this also includes resources for it as well.
+
 All binaries used are fetched remotely and are not included in this repository.
+
 This does NOT support Linux yet. Make sure to have python 3.11 installed too.
 
 Please read current known issues before proceeding.
@@ -9,6 +11,7 @@ Please read current known issues before proceeding.
 # Known issues:
 
 SpringBoard crashes constantly
+
 And potentially other things.
 
 # Is this untethered?
