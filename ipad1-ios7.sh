@@ -39,7 +39,7 @@ echo "Processing iBSS and iBEC"
 $SCRIPT_DIR/bins/xpwntool $OUTPUT_NAME/Firmware/dfu/iBSS.k48ap.RELEASE.dfu iBSS.dec -iv 9c69f81db931108e8efc268de3f5d94d -k 92f1cc2ca8362740734d69386fa6dde5582e18786777e1f9772d5dd364d873fb
 $SCRIPT_DIR/bins/xpwntool $OUTPUT_NAME/Firmware/dfu/iBEC.k48ap.RELEASE.dfu iBEC.dec -iv bde7b0d5cf7861479d81eb23f99d2e9e -k 1ba1f38e6a5b4841c1716c11acae9ee0fb471e50362a3b0dd8d98019f174a2f2
 $SCRIPT_DIR/bins/iBoot32Patcher iBSS.dec iBSS.patched --rsa
-$SCRIPT_DIR/bins/iBoot32Patcher iBEC.dec iBEC.patched --rsa --debug -b "rd=md0 serial=3 amfi=0xff amfi_get_out_of_my_way=1 cs_enforcement_disable=1 pio-error=0"
+$SCRIPT_DIR/bins/iBoot32Patcher iBEC.dec iBEC.patched --rsa --debug -b "rd=md0 -v amfi=0xff amfi_get_out_of_my_way=1 cs_enforcement_disable=1 pio-error=0"
 $SCRIPT_DIR/bins/img3maker -f iBSS.patched -o $OUTPUT_NAME/Firmware/dfu/iBSS.k48ap.RELEASE.dfu -t ibss
 $SCRIPT_DIR/bins/img3maker -f iBEC.patched -o $OUTPUT_NAME/Firmware/dfu/iBEC.k48ap.RELEASE.dfu -t ibec
 rm -rf iBSS.dec iBSS.patched iBEC.dec iBEC.patched
