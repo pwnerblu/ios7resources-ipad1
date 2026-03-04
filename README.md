@@ -6,7 +6,7 @@ This is a proof of concept, not a finished project.
 
 All binaries/additional tools used are fetched remotely and are not included in this repository.
 
-This does NOT support Linux yet. Make sure to have python 3.11 installed too, get it from https://www.python.org/downloads/release/python-3110/.
+This does NOT support Linux yet. Make sure to have python 3.11 installed too (standalone), get it from https://www.python.org/downloads/release/python-3110/.
 
 Please read current known issues before proceeding.
 
