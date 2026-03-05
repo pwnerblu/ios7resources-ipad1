@@ -14,13 +14,11 @@ On Apple Silicon, install Rosetta 2 before proceeding.
 
 # Known issues:
 
-SpringBoard crashes constantly
-
-And potentially other things.
+Bluetooth and Audio does not work, and SpringBoard is not fully working.
 
 # Is this untethered?
 
-Not yet, but since 5.1.1 iBoot has a bug in the HFS+ driver, it can technically be untethered (though SpringBoard, among other issues need to be fixed first before untethering it).
+Yes! This uses the 5.1.1 iBoot exploit to untether it.
 
 # IPSWs to download?
 
