@@ -52,7 +52,7 @@ idevicerestore, libirecovery - libimobiledevice
 
 # Thanks to
 
-NyanSatan - DT diffing tool, and some of the diff itself
+NyanSatan - DT diffing tool, and some of the diff itself. Also for rc.boot and exploit.dmg, which is used for untethering it.
 
 Tuanem - Fixing some issues 
 
