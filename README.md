@@ -54,7 +54,7 @@ idevicerestore, libirecovery - libimobiledevice
 
 NyanSatan - DT diffing tool, and some of the diff itself
 
-Tuanem - Fixing some issues (not pushed fully to the repo yet)
+Tuanem - Fixing some issues 
 
 
 
