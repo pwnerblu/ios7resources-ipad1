@@ -1,5 +1,8 @@
+# DeviceTree diff: iPad 1 (K48AP) → iOS 7 (Innsbruck)
+# Base: working diff from user (boots successfully)
+# Added: product node (Sundance k48ap format) to fix invalid product / MobileGestalt
+
 # generic stuff
-# A (somewhat) cleaned up diff of iPad 1 5.1.1 DeviceTree and iPhone 4 7.0 DeviceTree
 PROP ADD firmware-min-capacity 00001800 device-tree
 PROP ADD manufacturer 4170706c6520496e632e00 device-tree
 PROP ADD regulatory-model-number 0000000000000000000000000000000000000000000000000000000000000000 device-tree
@@ -22,8 +25,7 @@ PROP ADD kern.io_throttle_period_tier3 64000000 device-tree/defaults
 PROP ADD kern.io_throttle_window_tier3 f4010000 device-tree/defaults
 PROP ADD kern.jetsam_idle_offset 0a000000 device-tree/defaults
 
-
-# stuff
+# PMU / i2c0
 PROP ADD event_name-gpio8 6d696b657900 device-tree/arm-io/i2c0/pmu
 PROP SET event_name-gpio10 626c7565746f6f746800 device-tree/arm-io/i2c0/pmu
 PROP SET gpio-quiesce-defaults 0000000000000000000002020000e2c200000000 device-tree/arm-io/i2c0/pmu
@@ -46,13 +48,18 @@ PROP REMOVE function-usb_det device-tree/charger
 PROP REMOVE function-set_charger device-tree/charger
 PROP REMOVE interrupts device-tree/charger
 
+# MiKey (headphone remote) - 'mikey,cd3282' has no driver in iOS 7 iPhone 4 kernel
+# Change to 'apple,mikey' which iOS 7 kernel can handle (or match quickly and not block IOKit)
+# Without this fix: IOKit never quiesces -> MobileGestaltHelper times out -> SpringBoard segfault
+PROP SET compatible 6170706c652c6d696b657900 device-tree/arm-io/i2c0/mikey
+
+
 # USB
 PROP SET clock-mask 11000300 device-tree/arm-io/usb-complex/usb-device
 PROP SET publish-criteria 04000000 device-tree/arm-io/usb-complex/usb-ehci
 PROP SET clock-mask 12000300 device-tree/arm-io/usb-complex/usb-ehci
 PROP SET clock-mask 16000300 device-tree/arm-io/usb-complex/usb-ohci0
 PROP SET clock-mask 08000100 device-tree/arm-io/usb-complex/usb-ohci1
-
 PROP ADD uotgtune1-device 49030000 device-tree/arm-io/otgphyctrl
 PROP ADD uotgtune2-host f3060000 device-tree/arm-io/otgphyctrl
 PROP ADD uotgtune1-host 4f030000 device-tree/arm-io/otgphyctrl
@@ -62,24 +69,20 @@ PROP REMOVE clock-gates device-tree/arm-io/otgphyctrl
 PROP REMOVE host-phy-tuning-val device-tree/arm-io/otgphyctrl
 PROP REMOVE phy-tuning1-val device-tree/arm-io/otgphyctrl
 PROP SET clock-gates 5500000056000000570000005800000054000000 device-tree/arm-io/usb-complex
-
 PROP ADD configuration-string 7374616e646172644d757850545045746865726e657400 device-tree/arm-io/usb-complex/usb-device
 PROP ADD product-string 6950616400 device-tree/arm-io/usb-complex/usb-device
 PROP ADD vendor-id ac050000 device-tree/arm-io/usb-complex/usb-device
 PROP ADD vendor-string 4170706c6520496e632e00 device-tree/arm-io/usb-complex/usb-device
 PROP ADD product-id 9f120000 device-tree/arm-io/usb-complex/usb-device
 PROP ADD product-version 10020000 device-tree/arm-io/usb-complex/usb-device
-
 PROP REMOVE hsic-ports device-tree/arm-io/usb-complex/usb-ehci
 NODE ADD device-tree/arm-io/usb-complex/usb-ehci/usb-ehci-port1 0700000000000000706f72740000000000000000000000000000000000000000000000000000000004000000010000004141504c2c7068616e646c650000000000000000000000000000000000000000040000000000003a636c6f636b2d6d61736b000000000000000000000000000000000000000000000400000002000300706f72742d63757272656e742d6c696d6974000000000000000000000000000004000000320000006465766963655f747970650000000000000000000000000000000000000000000f0000007573622d656863692d706f72743100006e616d65000000000000000000000000000000000000000000000000000000000f0000007573622d656863692d706f7274310000706f72742d7479706500000000000000000000000000000000000000000000000400000002000000
-
 PROP ADD port-count 01000000 device-tree/arm-io/usb-complex/usb-ohci0
 PROP REMOVE rh-ports device-tree/arm-io/usb-complex/usb-ohci0
 NODE ADD device-tree/arm-io/usb-complex/usb-ohci0/usb-ohci0-port1 0700000000000000706f72740000000000000000000000000000000000000000000000000000000004000000010000004141504c2c7068616e646c650000000000000000000000000000000000000000040000000000003c636c6f636b2d6d61736b000000000000000000000000000000000000000000000400000006000300706f72742d63757272656e742d6c696d6974000000000000000000000000000004000000320000006465766963655f74797065000000000000000000000000000000000000000000100000007573622d6f686369302d706f727431006e616d6500000000000000000000000000000000000000000000000000000000100000007573622d6f686369302d706f72743100706f72742d7479706500000000000000000000000000000000000000000000000400000002000000
 PROP ADD removable 00000000 device-tree/arm-io/usb-complex/usb-ohci1
 PROP REMOVE rh-ports device-tree/arm-io/usb-complex/usb-ohci1
 PROP REMOVE captive-ports device-tree/arm-io/usb-complex/usb-ohci1
-
 
 # NAND
 PROP ADD enable-diff-dqs 00000000 device-tree/arm-io/flash-controller0/disk
@@ -92,8 +95,7 @@ PROP ADD diag-bits 01000000 device-tree/arm-io/flash-controller0/disk
 PROP ADD dqs-half-cycle-clks 00000000 device-tree/arm-io/flash-controller0/disk
 PROP ADD enable-vref 00000000 device-tree/arm-io/flash-controller0/disk
 
-# More stuff
-
+# Audio
 PROP ADD at-scale 00000000000000000000000000000000 device-tree/arm-io/i2c0/audio0
 PROP ADD mic3-intmic  device-tree/arm-io/i2c0/audio0
 PROP ADD ear_out-rcvr  device-tree/arm-io/i2c0/audio0
@@ -105,8 +107,12 @@ PROP SET data-sources 76327061020108000900090000000000401f000000000000112b000000
 PROP SET reg 010000000200010000000000000000000000000003000000030000000202101000000000 device-tree/arm-io/i2s1/audio1
 PROP SET reg 1000000002000100808d5b00000000000000000003000000030000000202101000000000 device-tree/arm-io/i2s2/audio2
 
-# experimental, may not even be needed
-
+# Gas gauge
 PROP REMOVE atv-voltage-limits device-tree/arm-io/uart5/gas-gauge
 PROP REMOVE atv-current-limits device-tree/arm-io/uart5/gas-gauge
 PROP REMOVE charge-table-block device-tree/arm-io/uart5/gas-gauge
+
+
+NODE ADD device-tree/product 06000000010000004141504c2c7068616e646c650000000000000000000000000000000000000000040000000000005870726f647563742d6964000000000000000000000000000000000000000000001400000000000000000000000000000000000000000000006974756e65732d6d696e2d7665720000000000000000000000000000000000000400000003060a00756469642d76657273696f6e000000000000000000000000000000000000000004000000000000006e616d65000000000000000000000000000000000000000000000000000000000800000070726f6475637400766964656f2d6361700000000000000000000000000000000000000000000000040000000000000003000000000000006e6f2d73696d706c69737469632d726f61642d6d65736800000000000000000004000000000000006e616d6500000000000000000000000000000000000000000000000000000000050000006d617073000000004141504c2c7068616e646c6500000000000000000000000000000000000000000400000000000059
+# product-id
+PROP SET product-id 832639820B5D5D92A684BDC15A9725C3E29CC13C device-tree/product
