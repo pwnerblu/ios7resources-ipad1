@@ -3,6 +3,7 @@
 # ---- Resolve script directory ----
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+URL="https://github.com/pwnerblu/extra-resources-ipad1/releases/download/1.0/dyld.tar"
 RESOURCE_DIR="$SCRIPT_DIR/resources"
 DYLD_FILE="$RESOURCE_DIR/dyld.tar"
 mkdir -p "$RESOURCE_DIR"
