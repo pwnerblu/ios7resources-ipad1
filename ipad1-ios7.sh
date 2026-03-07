@@ -3,6 +3,41 @@
 # ---- Resolve script directory ----
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+RESOURCE_DIR="$SCRIPT_DIR/resources"
+DYLD_FILE="$RESOURCE_DIR/dyld.tar"
+mkdir -p "$RESOURCE_DIR"
+
+if [[ ! -f "$DYLD_FILE" ]]; then
+    echo "dyld.tar not found, downloading..."
+
+    MAX_RETRIES=20
+    RETRY_DELAY=3
+    ATTEMPT=1
+
+    while [[ $ATTEMPT -le $MAX_RETRIES ]]; do
+        echo "Download attempt $ATTEMPT..."
+
+        if curl -L --fail --output "$DYLD_FILE" "$URL"; then
+            echo "Download successful."
+            break
+        else
+            echo "Download failed."
+            rm -f "$DYLD_FILE"
+        fi
+
+        ((ATTEMPT++))
+        if [[ $ATTEMPT -le $MAX_RETRIES ]]; then
+            echo "Retrying in $RETRY_DELAY seconds..."
+            sleep "$RETRY_DELAY"
+        else
+            echo "Failed to download dyld.tar after $MAX_RETRIES attempts."
+            exit 1
+        fi
+    done
+else
+    echo "dyld.tar already exists, skipping download."
+fi
+
 mkdir -p $SCRIPT_DIR/bins
 curl -L -o $SCRIPT_DIR/bins/xpwntool https://github.com/LukeZGD/Legacy-iOS-Kit/raw/refs/heads/main/bin/macos/xpwntool
 curl -L -o $SCRIPT_DIR/bins/iBoot32Patcher https://github.com/LukeZGD/Legacy-iOS-Kit/raw/refs/heads/main/bin/macos/iBoot32Patcher
@@ -25,7 +60,7 @@ if [ "$#" -ne 3 ]; then
     echo "Usage: $0 [base ipsw] [target ipsw] [output name]"
     echo ""
     echo "Example:"
-    echo "$0 iPad1,1_5.1.1_9B206_Restore.ipsw iPhone3,1_7.0_11A465_Restore.ipsw iPad1,1_7.0_11A465_Restore"
+    echo "$0 iPad1,1_5.1.1_9B206_Restore.ipsw iPad2,1_7.0_11A465_Restore.ipsw iPad1,1_7.0_11A465_Restore"
     exit 1
 fi
 
@@ -46,16 +81,17 @@ $SCRIPT_DIR/bins/img3maker -f iBSS.patched -o $OUTPUT_NAME/Firmware/dfu/iBSS.k48
 $SCRIPT_DIR/bins/img3maker -f iBEC.patched -o $OUTPUT_NAME/Firmware/dfu/iBEC.k48ap.RELEASE.dfu -t ibec
 rm -rf iBSS.dec iBSS.patched iBEC.dec iBEC.patched
 echo "Extracting iOS 7 root filesystem"
-$SCRIPT_DIR/bins/dmg extract tmp/038-3447-395.dmg rootfs.raw -k 89d4dadced94577508999a1ce2a08b346328d9b25ad4e63b4220ce441cce35cf9e0a108b
+$SCRIPT_DIR/bins/dmg extract tmp/038-3423-394.dmg rootfs.raw -k 22c8a5554401cf466a2fdcf4f1156bd0b15bcf38d6b04356c3628f5405415debcb1f5061
 echo "Modifying iOS 7 root filesystem"
 $SCRIPT_DIR/bins/hfsplus rootfs.raw grow 2500000000
-# Add iPad 2 icon layout
-$SCRIPT_DIR/bins/hfsplus rootfs.raw rmall "System/Library/CoreServices/SpringBoard.app"
-$SCRIPT_DIR/bins/hfsplus rootfs.raw untar $SCRIPT_DIR/resources/springboard.tar 
-# for touchscreen to work
+echo "Removing FaceTime.app"
+$SCRIPT_DIR/bins/hfsplus rootfs.raw rmall "Applications/FaceTime.app"
+echo "Untarring iPhone3,1 7.0 dyld shared cache"
+$SCRIPT_DIR/bins/hfsplus rootfs.raw untar $SCRIPT_DIR/resources/dyld.tar 
+echo "Adding touch and multitouch drivers"
 $SCRIPT_DIR/bins/hfsplus rootfs.raw add $SCRIPT_DIR/resources/Common.mtprops usr/share/firmware/multitouch/Common.mtprops
 $SCRIPT_DIR/bins/hfsplus rootfs.raw add $SCRIPT_DIR/resources/iPad.mtprops usr/share/firmware/multitouch/iPad.mtprops
-# WiFi drivers
+echo "Adding Wi-Fi drivers"
 $SCRIPT_DIR/bins/hfsplus rootfs.raw mkdir usr/share/firmware/wifi/4329c0
 $SCRIPT_DIR/bins/hfsplus rootfs.raw add $SCRIPT_DIR/resources/duo.bin usr/share/firmware/wifi/4329c0/uno.bin
 $SCRIPT_DIR/bins/hfsplus rootfs.raw add $SCRIPT_DIR/resources/duo.txt usr/share/firmware/wifi/4329c0/uno.txt
@@ -67,27 +103,28 @@ rm -rf "rootfs.raw"
 echo "Replacing DeviceTree"
 cp $SCRIPT_DIR/dtre/DeviceTree.k48ap.img3 $OUTPUT_NAME/Firmware/all_flash/all_flash.k48ap.production/DeviceTree.k48ap.img3 
 echo "Processing restore ramdisk"
-$SCRIPT_DIR/bins/xpwntool tmp/038-3373-256.dmg ramdisk.raw -iv 076220ac2c46cd54f1eff12d78f044b2 -k b2101ec5cdd1919c5b0e6dd7116f576ec38b62d9d2880418486fa9f2237e94cc
+$SCRIPT_DIR/bins/xpwntool tmp/038-3465-251.dmg ramdisk.raw -iv 9589205905735ab88c7e129083bb0e3d -k f2acfe16974b1839d06148f1d3d165ce41c26f9accdd2cea90a4d3e4c5a2a02b
 $SCRIPT_DIR/bins/hfsplus ramdisk.raw grow 20000000
 $SCRIPT_DIR/bins/hfsplus ramdisk.raw rm usr/sbin/asr
 $SCRIPT_DIR/bins/hfsplus ramdisk.raw add $SCRIPT_DIR/Ramdisk-stuff/asr usr/sbin/asr
 $SCRIPT_DIR/bins/hfsplus ramdisk.raw chmod 100755 usr/sbin/asr
-$SCRIPT_DIR/bins/hfsplus ramdisk.raw extract usr/local/share/restore/options.n90.plist 
+$SCRIPT_DIR/bins/hfsplus ramdisk.raw extract usr/local/share/restore/options.k93.plist 
 # Add baseband update skip
-printf "<key>UpdateBaseband</key><false/>\n" >> options.n90.plist
-$SCRIPT_DIR/bins/hfsplus ramdisk.raw rm usr/local/share/restore/options.n90.plist 
-$SCRIPT_DIR/bins/hfsplus ramdisk.raw add options.n90.plist usr/local/share/restore/options.k48.plist
+plutil -replace SystemPartitionSize -integer 3000 options.k93.plist
+printf "<key>UpdateBaseband</key><false/>\n" >> options.k93.plist
+$SCRIPT_DIR/bins/hfsplus ramdisk.raw rm usr/local/share/restore/options.k93.plist 
+$SCRIPT_DIR/bins/hfsplus ramdisk.raw add options.k93.plist usr/local/share/restore/options.k48.plist
 echo "Adding untether stuff"
 $SCRIPT_DIR/bins/hfsplus ramdisk.raw rm etc/rc.boot
 $SCRIPT_DIR/bins/hfsplus ramdisk.raw add $SCRIPT_DIR/bins/rc.boot etc/rc.boot
 $SCRIPT_DIR/bins/hfsplus ramdisk.raw chmod 100755 etc/rc.boot
 $SCRIPT_DIR/bins/hfsplus ramdisk.raw add $SCRIPT_DIR/bins/exploit.dmg exploit.dmg
 $SCRIPT_DIR/bins/img3maker -f ramdisk.raw -o $OUTPUT_NAME/038-4361-021.dmg -t rdsk
-rm -rf ramdisk.raw options.n90.plist
-echo "Replacing kernelcache with iPhone3,1 7.0 kernelcache"
-mv tmp/kernelcache.release.n90 $OUTPUT_NAME/kernelcache.release.k48
+rm -rf ramdisk.raw options.k93.plist
+echo "Downloading iPhone3,1 7.0 kernelcache"
+$SCRIPT_DIR/bins/pzb -g kernelcache.release.n90 https://secure-appldnld.apple.com/iOS7/091-9485.20130918.Xa98u/iPhone3,1_7.0_11A465_Restore.ipsw
+mv kernelcache.release.n90 $OUTPUT_NAME/kernelcache.release.k48
 rm -rf "tmp"
 echo "Finished"
-
 
 
