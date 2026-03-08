@@ -112,7 +112,7 @@ $SCRIPT_DIR/bins/hfsplus ramdisk.raw chmod 100755 usr/sbin/asr
 $SCRIPT_DIR/bins/hfsplus ramdisk.raw extract usr/local/share/restore/options.k93.plist 
 # Add baseband update skip
 plutil -replace SystemPartitionSize -integer 3000 options.k93.plist
-printf "<key>UpdateBaseband</key><false/>\n" >> options.k93.plist
+/usr/libexec/PlistBuddy -c "Add :UpdateBaseband bool false" options.k93.plist
 $SCRIPT_DIR/bins/hfsplus ramdisk.raw rm usr/local/share/restore/options.k93.plist 
 $SCRIPT_DIR/bins/hfsplus ramdisk.raw add options.k93.plist usr/local/share/restore/options.k48.plist
 echo "Adding untether stuff"
@@ -127,5 +127,4 @@ $SCRIPT_DIR/bins/pzb -g kernelcache.release.n90 https://secure-appldnld.apple.co
 mv kernelcache.release.n90 $OUTPUT_NAME/kernelcache.release.k48
 rm -rf "tmp"
 echo "Finished"
-
 
