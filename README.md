@@ -18,6 +18,8 @@ On Apple Silicon, install Rosetta 2 before proceeding.
 
 Bluetooth and Audio does not work. SpringBoard may crash sometimes though. Keyboard does not work.
 
+Baseband querying will fail on cellular iPad 1 during restore.
+
 # Is this untethered?
 
 Yes! This uses the 5.1.1 iBoot exploit to untether it.
