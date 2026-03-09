@@ -12,7 +12,7 @@ Currently, this project only supports macOS 10.13 High Sierra and up in Intel pr
 
 Bluetooth and Audio does not work. SpringBoard may crash sometimes though. Keyboard does not work.
 
-Baseband querying will fail on cellular iPad 1 during restore.
+Baseband querying may fail on cellular iPad 1 during restore. (Just patched, uncertain if it may happen)
 
 # Is this untethered?
 
