@@ -56,8 +56,8 @@ chmod +x $SCRIPT_DIR/bins/*
 xattr -cr $SCRIPT_DIR/bins/*
 
 echo "iPad 1 haxx"
-echo "Codenamed Snowfinch by Turlum25 - Version 0.2-fork"
-echo "--------------------------------------------------"
+echo "Codenamed Snowfinch by Turlum25 - Version 0.3-fork"
+echo "--------------------------------------------------" 
 
 if [ "$#" -ne 3 ]; then
     echo "Usage: $0 [base ipsw] [target ipsw] [output name]"
@@ -114,7 +114,7 @@ $SCRIPT_DIR/bins/hfsplus ramdisk.raw chmod 100755 usr/sbin/asr
 $SCRIPT_DIR/bins/hfsplus ramdisk.raw extract usr/local/share/restore/options.k93.plist 
 # Add baseband update skip
 plutil -replace SystemPartitionSize -integer 3000 options.k93.plist
-printf "<key>UpdateBaseband</key><false/>\n" >> options.k93.plist
+/usr/libexec/PlistBuddy -c "Add :UpdateBaseband bool false" options.k93.plist
 $SCRIPT_DIR/bins/hfsplus ramdisk.raw rm usr/local/share/restore/options.k93.plist 
 $SCRIPT_DIR/bins/hfsplus ramdisk.raw add options.k93.plist usr/local/share/restore/options.k48.plist
 echo "Adding untether stuff"
@@ -138,4 +138,3 @@ echo "Bundle can be found in $SCRIPT_DIR/restore."
 echo "Waiting for 3 seconds before starting restore..."
 sleep 3
 $SCRIPT_DIR/restore/snowfinch
-
