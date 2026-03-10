@@ -51,9 +51,9 @@ void helperDFU() {
 
 int main() {
 
-    printf("Snowfinch - Version 0.1-stable | Script by Turlum25, commands by pwnerblu\n");
+    printf("SnowfinchRestore - Version 0.1-stable | Script by Turlum25\n");
     fflush(stdout);
-    printf("-------------------------------------------------------------------------\n");
+    printf("----------------------------------------------------------\n");
     bundleCheck();
     helperDFU();
     printf("iPad 1 haxx\n");
