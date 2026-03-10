@@ -1,6 +1,6 @@
-# Snowfinch
+# ios7-ipad1
 
-A fork of pwnerblu's ios7resources-ipad1 which restores automatically without using idevicerestore manually. I also aim in trying to make keyboard and audio to work.
+A script that makes a restore bundle and installs iOS 7.0 on iPad 1
 
 This is still not a full finished project.
 
@@ -52,7 +52,7 @@ NyanSatan - DT diffing tool, and some of the diff itself. Also for rc.boot and e
 
 Tuanem - Fixing some issues 
 
-Pwnerblu - Making the original [ios7resources-ipad1](https://github.com/pwnerblu/ios7resources-ipad1) project. 
+turlum25 - Snowfinch
 
 
 
