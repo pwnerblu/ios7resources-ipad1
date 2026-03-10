@@ -56,7 +56,7 @@ chmod +x $SCRIPT_DIR/bins/*
 xattr -cr $SCRIPT_DIR/bins/*
 
 echo "iPad 1 haxx"
-echo "Codenamed Snowfinch by Turlum25 - Version 0.3-fork"
+echo "Codenamed Snowfinch by Turlum25 - Version 0.3.1-fork"
 echo "--------------------------------------------------" 
 
 if [ "$#" -ne 3 ]; then
