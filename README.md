@@ -30,7 +30,7 @@ Yes! This uses the 5.1.1 iBoot exploit to untether it.
 
 Set permissions first: `chmod +x *.sh`
 
-Also make sure to compile Snowfinch: `python3 compile.py`
+~~Also make sure to compile Snowfinch: `python3 compile.py`~~ Automatic compiling of Snowfinch was added as of now.
 
 Set permissions for the other tools: `chmod +x restore/tools/*` and `xattr -cr restore/tools/*`
 
