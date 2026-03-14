@@ -140,4 +140,6 @@ mv $OUTPUT_NAME $SCRIPT_DIR/restore/iPad1,1_7.0_11A465_Restore
 echo "Bundle can be found in $SCRIPT_DIR/restore."
 echo "Waiting for 3 seconds before starting restore..."
 sleep 3
-cd $SCRIPT_DIR/restore && ./snowfinch
+# BY TURLUM25 - COMPILE SNOWFINCH RESTORE
+cd $SCRIPTDIR/restore && clang Snowfinch.c -o snowfinch
+./snowfinch
