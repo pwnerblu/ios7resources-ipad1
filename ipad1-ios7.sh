@@ -141,5 +141,5 @@ echo "Bundle can be found in $SCRIPT_DIR/restore."
 echo "Waiting for 3 seconds before starting restore..."
 sleep 3
 # BY TURLUM25 - COMPILE SNOWFINCH RESTORE
-cd $SCRIPTDIR/restore && clang Snowfinch.c -o snowfinch
+cd $SCRIPT_DIR/restore && clang Snowfinch.c -o snowfinch
 ./snowfinch
