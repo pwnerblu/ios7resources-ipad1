@@ -16,6 +16,8 @@ Control Center also does not work.
 
 Baseband querying may fail on cellular iPad 1 during restore. (Just patched, uncertain if it may happen)
 
+Activation will not work on Cellular iPad 1, though activation may work fine on iPad 1 Wi-Fi models. (there is a hacktivation option for cellular iPad 1 though)
+
 # Is this untethered?
 
 Yes! This uses the 5.1.1 iBoot exploit to untether it.
@@ -35,6 +37,10 @@ Set permissions first: `chmod +x *.sh`
 Set permissions for the other tools: `chmod +x restore/tools/*` and `xattr -cr restore/tools/*`
 
 `./ipad1-ios7.sh iPad1,1_5.1.1_9B206_Restore.ipsw iPad2,1_7.0_11A465_Restore.ipsw iPad1,1_7.0_11A465_Restore`
+
+If activation fails, or if your iPad 1 is a cellular model, run this instead:
+
+`./ipad1-ios7.sh iPad1,1_5.1.1_9B206_Restore.ipsw iPad2,1_7.0_11A465_Restore.ipsw iPad1,1_7.0_11A465_Restore --hacktivate`
 
 After the creation of the bundle, the program will automatically restore with the bundle to the iPad 1.
 
