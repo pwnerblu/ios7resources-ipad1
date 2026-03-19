@@ -1,0 +1,7 @@
+PROP ADD mac-address-bluetooth0 000000000000 device-tree/chosen
+PROP ADD mac-address-ethernet0 000000000000 device-tree/chosen
+PROP ADD consistent-debug-root 0000000000000000 device-tree/chosen
+PROP ADD mac-address-wifi0 000000000000 device-tree/chosen
+PROP ADD boot-nonce 0000000000000000 device-tree/chosen
+PROP SET voltage-states0 02000000000000000100000000000000 device-tree/arm-io/pmgr
+PROP ADD cpu-max-core-count 01000000 device-tree/arm-io/pmgr
