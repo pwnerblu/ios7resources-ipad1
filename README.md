@@ -60,6 +60,8 @@ NyanSatan - DT diffing tool, and some of the diff itself. Also for rc.boot and e
 
 Tuanem - Fixing some issues 
 
+Ralph0045 - The one that originally ported iOS 7 to the iPod touch 4
+
 turlum25 - Snowfinch
 
 
