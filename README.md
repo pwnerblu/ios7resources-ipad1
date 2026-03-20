@@ -10,7 +10,7 @@ Currently, this project only supports macOS 10.13 High Sierra and up in Intel pr
 
 # Known issues
 
-Bluetooth, audio, and keyboard does not work and SpringBoard may crash sometimes. 
+Bluetooth, audio, and keyboard does not work and SpringBoard may crash sometimes. Keyboard works fine though on iPod touch 4.
 
 Control Center also does not work on iPad 1, works fine on iPod touch 4.
 
