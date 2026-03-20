@@ -21,6 +21,7 @@ Activation will not work on Cellular iPad 1, though activation may work fine on 
 # Is this untethered?
 
 For the iPad 1, yes! This uses the 5.1.1 iBoot exploit to untether it.
+
 For the iPod touch 4, no, you need to tether boot it afterwards with `./boot2.sh`
 
 # iPad 1 uses iPad2,1 firmware
