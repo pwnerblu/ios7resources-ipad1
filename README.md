@@ -72,7 +72,7 @@ idevicerestore, libirecovery - libimobiledevice
 
 NyanSatan - DT diffing tool, and some of the diff itself. Also for rc.boot and exploit.dmg, which is used for untethering it.
 
-Tuanem - Fixing some issues 
+Tuanem - Fixing some issues on iOS 7 iPad 1
 
 Ralph0045 - The one that originally ported iOS 7 to the iPod touch 4
 
