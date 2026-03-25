@@ -4,6 +4,8 @@ A script that makes a restore bundle and installs iOS 7.0 on iPad 1 and iPod tou
 
 This is still not a full finished project.
 
+For support, join LegacyJailbreak's discord server.
+
 # Support
 
 Currently, this project only supports macOS 10.13 High Sierra and up in Intel processors (you can also run this on Apple Silicon if you install Rosetta 2) and does not support Linux yet. 
