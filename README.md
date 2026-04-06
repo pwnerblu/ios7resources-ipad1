@@ -2,7 +2,7 @@
 
 A script that makes a restore bundle and installs iOS 7.0 on iPad 1 and iPod touch 4
 
-## NOTE, IT IS RECOMMENDED TO USE [THE REWRITTEN FORK OF THIS BY ASENTIENTBOT](https://github.com/amy-and-nicole/ipad-1-ios-7) instead, this FORK has a ton of fixes
+## NOTE, IT IS RECOMMENDED TO USE [THE FORK BY ASENTIENTBOT](https://github.com/amy-and-nicole/ipad-1-ios-7) instead, this FORK has a ton of fixes
 
 This is still not a full finished project.
 
