@@ -182,9 +182,10 @@ $SCRIPT_DIR/bins/hfsplus rootfs.raw add $SCRIPT_DIR/resources/duo.bin usr/share/
 $SCRIPT_DIR/bins/hfsplus rootfs.raw add $SCRIPT_DIR/resources/duo.txt usr/share/firmware/wifi/4329c0/uno.txt
 if [[ $HACKTIVATE == 1 ]]; then
     echo "Adding hacktivation"
-    $SCRIPT_DIR/bins/hfsplus rootfs.raw add $SCRIPT_DIR/resources/MobileGestalt.plist private/var/mobile/Library/Caches/com.apple.MobileGestalt.plist
+    $SCRIPT_DIR/bins/hfsplus rootfs.raw add $SCRIPT_DIR/resources/MobileGestalt-hactivation.plist private/var/mobile/Library/Caches/com.apple.MobileGestalt.plist
 else
     echo "Hacktivation disabled, skipping hacktivation"
+    $SCRIPT_DIR/bins/hfsplus rootfs.raw add $SCRIPT_DIR/resources/MobileGestalt.plist private/var/mobile/Library/Caches/com.apple.MobileGestalt.plist
 fi
 echo "Building root filesystem"
 $SCRIPT_DIR/bins/dmg build rootfs.raw $OUTPUT_NAME/038-4291-006.dmg 
