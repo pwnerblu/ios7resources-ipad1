@@ -49,9 +49,9 @@ curl -L -o $SCRIPT_DIR/bins/dmg https://github.com/LukeZGD/Legacy-iOS-Kit/raw/re
 curl -L -o $SCRIPT_DIR/bins/ipwnder32 https://github.com/LukeZGD/Legacy-iOS-Kit/raw/refs/heads/main/bin/macos/ipwnder32
 curl -L -o $SCRIPT_DIR/bins/img3maker https://github.com/LukeZGD/Legacy-iOS-Kit/raw/refs/heads/main/bin/macos/img3maker
 curl -L -o $SCRIPT_DIR/bins/pzb https://github.com/LukeZGD/Legacy-iOS-Kit/raw/refs/heads/main/bin/macos/pzb
-curl -L -o $SCRIPT_DIR/bins/irecovery https://github.com/NyanSatan/SundanceInH2A/raw/refs/heads/master/executables/irecovery
-curl -L -o $SCRIPT_DIR/bins/idevicerestore https://github.com/NyanSatan/SundanceInH2A/raw/refs/heads/master/executables/idevicerestore
-curl -L -o $SCRIPT_DIR/bins/hfsplus https://github.com/NyanSatan/SundanceInH2A/raw/refs/heads/master/executables/hfsplus
+curl -L -o $SCRIPT_DIR/bins/irecovery https://github.com/NyanSatan/SundanceInH2A/raw/refs/heads/master/executables/Darwin/irecovery
+curl -L -o $SCRIPT_DIR/bins/idevicerestore https://github.com/NyanSatan/SundanceInH2A/raw/refs/heads/master/executables/Darwin/idevicerestore
+curl -L -o $SCRIPT_DIR/bins/hfsplus https://github.com/NyanSatan/SundanceInH2A/raw/refs/heads/master/executables/Darwin/hfsplus
 # These are for untethering it, thanks to NyanSatan
 curl -L -o $SCRIPT_DIR/bins/rc.boot https://github.com/NyanSatan/SundanceInH2A/raw/refs/heads/master/rc_boot/rc.boot
 curl -L -o $SCRIPT_DIR/bins/exploit.dmg https://github.com/NyanSatan/SundanceInH2A/raw/refs/heads/master/exploit/exploit-k48.dmg
@@ -170,7 +170,9 @@ $SCRIPT_DIR/bins/hfsplus rootfs.raw grow 2500000000
 echo "Removing FaceTime.app"
 $SCRIPT_DIR/bins/hfsplus rootfs.raw rmall "Applications/FaceTime.app"
 echo "Untarring iPhone3,1 7.0 dyld shared cache"
-$SCRIPT_DIR/bins/hfsplus rootfs.raw untar $SCRIPT_DIR/resources/dyld.tar 
+$SCRIPT_DIR/bins/hfsplus rootfs.raw untar $SCRIPT_DIR/resources/dyld.tar
+echo "Removing System/Library/HIDPlugins/CompassPlugIn.plugin"
+$SCRIPT_DIR/bins/hfsplus rootfs.raw rmall System/Library/HIDPlugins/CompassPlugIn.plugin
 echo "Adding touch and multitouch drivers"
 $SCRIPT_DIR/bins/hfsplus rootfs.raw add $SCRIPT_DIR/resources/Common.mtprops usr/share/firmware/multitouch/Common.mtprops
 $SCRIPT_DIR/bins/hfsplus rootfs.raw add $SCRIPT_DIR/resources/iPad.mtprops usr/share/firmware/multitouch/iPad.mtprops
